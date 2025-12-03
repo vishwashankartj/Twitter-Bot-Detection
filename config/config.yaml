@@ -1,0 +1,105 @@
+# Twitter Bot Detection Configuration
+
+# Data paths
+data:
+  raw_dir: "data/raw"
+  processed_dir: "data/processed"
+  external_dir: "data/external"
+  kaggle_dataset: "davidmartngutirrez/twitter-bots-accounts"  # Update with actual dataset name
+  
+# Graph construction
+graph:
+  network_types:
+    - "follower"
+    - "retweet"
+    - "mention"
+  min_nodes: 10
+  max_nodes: 100000
+  edge_weight_threshold: 1
+
+# Graph2Vec parameters
+graph2vec:
+  dimensions: 128
+  wl_iterations: 3
+  attributed: false
+  epochs: 10
+  learning_rate: 0.025
+  min_count: 5
+  workers: 4
+  seed: 42
+
+# Feature extraction
+features:
+  use_graph2vec: true
+  use_network_metrics: true
+  network_metrics:
+    - "degree_centrality"
+    - "betweenness_centrality"
+    - "clustering_coefficient"
+    - "pagerank"
+  use_profile_features: true
+  profile_features:
+    - "followers_count"
+    - "friends_count"
+    - "statuses_count"
+    - "verified"
+    - "account_age_days"
+
+# Model training
+training:
+  test_size: 0.2
+  validation_size: 0.1
+  random_state: 42
+  cv_folds: 5
+  
+# Classifiers
+classifiers:
+  random_forest:
+    n_estimators: 200
+    max_depth: 20
+    min_samples_split: 5
+    min_samples_leaf: 2
+    class_weight: "balanced"
+    random_state: 42
+    n_jobs: -1
+    
+  svm:
+    kernel: "rbf"
+    C: 10.0
+    gamma: "scale"
+    class_weight: "balanced"
+    random_state: 42
+    
+  neural_network:
+    hidden_layers: [256, 128, 64]
+    activation: "relu"
+    dropout: 0.3
+    learning_rate: 0.001
+    batch_size: 32
+    epochs: 50
+    early_stopping_patience: 10
+
+# Ensemble
+ensemble:
+  use_voting: true
+  voting_type: "soft"
+  weights: [2, 1, 1]  # RF, SVM, NN
+
+# Evaluation
+evaluation:
+  metrics:
+    - "accuracy"
+    - "precision"
+    - "recall"
+    - "f1"
+    - "roc_auc"
+  generate_plots: true
+  save_confusion_matrix: true
+  save_roc_curve: true
+
+# Output paths
+output:
+  models_dir: "models"
+  results_dir: "results"
+  plots_dir: "results/plots"
+  logs_dir: "logs"

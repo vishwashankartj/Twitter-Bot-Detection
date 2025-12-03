@@ -1,0 +1,11 @@
+Twitter Bot Detection - Classification Report
+============================================================
+
+              precision    recall  f1-score   support
+
+       Human     0.9574    0.6716    0.7895        67
+         Bot     0.2414    0.7778    0.3684         9
+
+    accuracy                         0.6842        76
+   macro avg     0.5994    0.7247    0.5789        76
+weighted avg     0.8726    0.6842    0.7396        76
